@@ -5,11 +5,11 @@ using UnityEngine;
 public class InputController : MonoBehaviour
 {
     public static InputController Instance;
-    private DynamicJoystick joystick;
-    public float xPosition = 0;
+    private DynamicJoystick Joystick;
+    public float zPosition = 0;
     private void Start()
     {
-        joystick = GetComponent<DynamicJoystick>();
+        Joystick = GetComponent<DynamicJoystick>();
         if (Instance == null)
         {
             Instance = this;
@@ -23,17 +23,17 @@ public class InputController : MonoBehaviour
     {
         //Joystick Input
         //1 to right -1 to left 0 to stop
-        if (joystick.Horizontal > 0.5f)
+        if (Joystick.Horizontal > 0.5f)
         {
-            xPosition = -1;
+            zPosition = -1;
         }
-        else if (joystick.Horizontal < -0.5f)
+        else if (Joystick.Horizontal < -0.5f)
         {
-            xPosition = 1;
+            zPosition = 1;
         }
         else
         {
-            xPosition = 0;
+            zPosition = 0;
         }
     }
 }
