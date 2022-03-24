@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject Player;
     private Vector3 Distance;
     private void Start()
     {
-        Distance = transform.position - player.transform.position;
-
+        Distance = transform.position - Player.transform.position;
     }
-    void Update()
+    private void LateUpdate()
     {
-        transform.position = player.transform.position + Distance;
+        transform.position = Player.transform.position + Distance;
+        Debug.Log(PlayerPrefs.GetInt("Gem"));
+        
     }
 }

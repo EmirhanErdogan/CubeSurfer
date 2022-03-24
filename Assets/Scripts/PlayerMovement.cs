@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 Pos
     {
         get => transform.position;
-        set => transform.position = value;              
+        set => transform.position = value;
     }
     private Vector3 movedPos;
     private void FixedUpdate()
@@ -22,17 +22,17 @@ public class PlayerMovement : MonoBehaviour
     {
         PlayerVerticalMovement();
         PlayerHorizantalMovement();
-        SetBorder();     
+        SetBorder();
     }
     private void PlayerVerticalMovement()
     {
-        transform.Translate(new Vector3(0, 0,verticalSpeed*Time.deltaTime));
+        transform.Translate(new Vector3(0, 0, verticalSpeed * Time.deltaTime));
     }
     private void PlayerHorizantalMovement()
     {
         if (Input.touchCount <= 0) return;
 
-        if (Touch.phase==TouchPhase.Moved)
+        if (Touch.phase == TouchPhase.Moved)
         {
             movedPos = new Vector3(Pos.x + Touch.deltaPosition.x * (Time.fixedDeltaTime * horizontalSpeed), Pos.y, Pos.z);
             Pos = movedPos;
@@ -40,19 +40,19 @@ public class PlayerMovement : MonoBehaviour
     }
     private void SetBorder()
     {
-        if (Pos.x<-playerBorder)
+        if (Pos.x < -playerBorder)
         {
             Pos = new Vector3(-playerBorder, Pos.y, Pos.z);
         }
-        if (Pos.x>playerBorder)
+        if (Pos.x > playerBorder)
         {
             Pos = new Vector3(playerBorder, Pos.y, Pos.z);
         }
     }
 
 
-    
-    
+
+
 
 
 }
