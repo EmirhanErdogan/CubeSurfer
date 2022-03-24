@@ -4,35 +4,49 @@ using UnityEngine;
 
 public class CubeCollect : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> cubes;
+    public static CubeCollect Instance;
+    public List<GameObject> cubes;
     private Vector3 cubeNewPos;
-    void Start()
+    private void Awake()
     {
-        
+        if (Instance == null)
+        {
+            Instance = this;
+        }
     }
 
     void Update()
     {
-        
+
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider Other)
     {
-        CollectCube(other, cubes.Count - 1);
-    }
-    private void CollectCube(Collider Cube,int index)
-    {
-        if (Cube.gameObject.tag.Equals("Collectable")) return;
        
-        if (Cube.gameObject.tag.Equals("Collectable"))
+
+
+    }
+    public void CollectCube(Collider Cube, int index)
+    {
+        if (Cube.gameObject.tag.Equals("Collected")) return;
+
+        Cube.gameObject.tag = "Collected";
+        for (int i = 0; i < cubes.Count; i++)
         {
-            cubes.Add(Cube.gameObject);
-            Cube.gameObject.transform.parent = transform;
-            cubeNewPos = cubes[index].transform.localPosition;
-            cubeNewPos.y += cubes[0].transform.localScale.y;
-            Cube.transform.localPosition = cubeNewPos;
-            //Pancake.GetComponent<Rigidbody>().isKinematic = false;
-            //Pancake.GetComponent<Rigidbody>().useGravity = false;
+            cubeNewPos = cubes[i].transform.localPosition;
+            cubeNewPos.y += cubes[i].transform.localScale.y;
+            cubes[i].transform.localPosition = cubeNewPos;
         }
+        Cube.gameObject.transform.parent = transform;
+        Cube.transform.localPosition = new Vector3(cubes[index].transform.localPosition.x, Cube.transform.localPosition.y, cubes[index].transform.localPosition.z);
+        Cube.GetComponent<Collider>().isTrigger = false;
+        Cube.gameObject.AddComponent<Collision>();
+        Cube.gameObject.AddComponent<Rigidbody>();
+        cubes.Add(Cube.gameObject);
+
+
+        //Pancake.GetComponent<Rigidbody>().isKinematic = false;
+        //Pancake.GetComponent<Rigidbody>().useGravity = false;
+
     }
     private void ReleaseCube()
     {
