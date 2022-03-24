@@ -21,7 +21,7 @@ public class CubeCollect : MonoBehaviour
     }
     private void OnTriggerEnter(Collider Other)
     {
-       
+
 
 
     }
@@ -39,19 +39,26 @@ public class CubeCollect : MonoBehaviour
         Cube.gameObject.transform.parent = transform;
         Cube.transform.localPosition = new Vector3(cubes[index].transform.localPosition.x, Cube.transform.localPosition.y, cubes[index].transform.localPosition.z);
         Cube.GetComponent<Collider>().isTrigger = false;
-        Cube.gameObject.AddComponent<Collision>();
+        Cube.gameObject.AddComponent<_Collision>();
         Cube.gameObject.AddComponent<Rigidbody>();
+        Cube.GetComponent<Rigidbody>().mass = 3.5f;
         cubes.Add(Cube.gameObject);
 
-
-        //Pancake.GetComponent<Rigidbody>().isKinematic = false;
-        //Pancake.GetComponent<Rigidbody>().useGravity = false;
-
     }
-    private void ReleaseCube()
+    public void ReleaseCube(GameObject releaseCube)
     {
+        releaseCube.transform.parent = null;
+        CubeCollect.Instance.cubes.Remove(releaseCube);
+    }
+    public IEnumerator _sortCubes()
+    {
+        yield return new WaitForSeconds(1.2f);
+        Vector3 SortPos = cubes[0].transform.localPosition;
+        for (int i = 1; i < cubes.Count; i++)
+        {
+            cubes[i].transform.localPosition = new Vector3(SortPos.x, cubes[i].transform.localPosition.y, SortPos.z);
+        }
 
     }
-
 
 }
