@@ -24,6 +24,7 @@ public class CubeCollect : MonoBehaviour
 
         Cube.gameObject.tag = "Collected";
         transform.GetChild(0).transform.GetChild(0).GetComponent<Animator>().SetBool("ÝsJump", true);
+        //transform.GetChild(0).transform.GetChild(1).gameObject.SetActive(true);
         AnimationStopper();
         for (int i = 0; i < cubes.Count; i++)
         {
@@ -79,6 +80,12 @@ public class CubeCollect : MonoBehaviour
     {
         await Task.Delay(25);
         transform.GetChild(0).transform.GetChild(0).GetComponent<Animator>().SetBool("ÝsJump", false);
+        //ParticleStopper();
+    }
+    private async void ParticleStopper()
+    {
+        await Task.Delay(500);
+        transform.GetChild(0).transform.GetChild(1).gameObject.SetActive(false);
     }
     //TODO
     //TRAÝL KAPANMASI LEVEL SONU ÇARPMA YAP
