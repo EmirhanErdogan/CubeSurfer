@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 public class CubeCollect : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class CubeCollect : MonoBehaviour
 
         Cube.gameObject.tag = "Collected";
         transform.GetChild(0).transform.GetChild(0).GetComponent<Animator>().SetBool("ÝsJump", true);
+        AnimationStopper();
         for (int i = 0; i < cubes.Count; i++)
         {
             cubeNewPos = cubes[i].transform.localPosition;
@@ -33,7 +35,8 @@ public class CubeCollect : MonoBehaviour
         Cube.transform.localPosition = new Vector3(cubes[index].transform.localPosition.x, Cube.transform.localPosition.y, cubes[index].transform.localPosition.z);
         Cube.GetComponent<Collider>().isTrigger = false;
         Cube.gameObject.AddComponent<_Collision>();
-        Cube.gameObject.AddComponent<Rigidbody>();
+        Cube.gameObject.GetComponent<Rigidbody>().useGravity=true;
+        Cube.gameObject.GetComponent<Rigidbody>().freezeRotation = true;
         Cube.GetComponent<Rigidbody>().mass = 100;
         Cube.GetComponent<Rigidbody>().isKinematic = true;
         cubes.Add(Cube.gameObject);
@@ -43,12 +46,12 @@ public class CubeCollect : MonoBehaviour
     {
         if (releaseCube.tag.Equals("Player")) return;
 
+        //transform.GetChild(0).transform.GetChild(0).GetComponent<Animator>().SetBool("ÝsJump", false);
         releaseCube.transform.parent = null;
         CubeCollect.Instance.cubes.Remove(releaseCube);
         for (int i = 0; i < cubes.Count; i++)
         {
             cubes[i].GetComponent<Rigidbody>().isKinematic = false;
-            cubes[i].GetComponent<Rigidbody>().AddForce(0, -999f, 0,ForceMode.Force);
         }
     }
     public IEnumerator _sortCubes()
@@ -71,6 +74,11 @@ public class CubeCollect : MonoBehaviour
         obj.gameObject.SetActive(false);
         PlayerPrefs.SetInt("Gem", PlayerPrefs.GetInt("Gem") + 1);
         gemText.text = string.Format("X {0}",PlayerPrefs.GetInt("Gem"));
+    }
+    private async void AnimationStopper()
+    {
+        await Task.Delay(25);
+        transform.GetChild(0).transform.GetChild(0).GetComponent<Animator>().SetBool("ÝsJump", false);
     }
     //TODO
     //TRAÝL KAPANMASI LEVEL SONU ÇARPMA YAP

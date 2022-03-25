@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class _Collision : MonoBehaviour
 {
+    [SerializeField]private float speed;
 
     private void OnTriggerEnter(Collider other)
     {
-        
         if (!CubeCollect.Instance.cubes.Contains(other.gameObject))
         {
             if (other.gameObject.tag.Equals("Collectable"))
