@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
 public class CubeCollect : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class CubeCollect : MonoBehaviour
     public List<GameObject> cubes;
     private Vector3 cubeNewPos;
     [SerializeField]private Text gemText;
-    [SerializeField] private GameObject winPanel;
+    [SerializeField] private GameObject restartPanel;
     private void Awake()
     {
         if (Instance == null)
@@ -76,10 +77,10 @@ public class CubeCollect : MonoBehaviour
         }
 
     }
-    public IEnumerator WinPanel() 
+    public IEnumerator RestartPanel() 
     {
         yield return new WaitForSeconds(1.5f);
-        winPanel.SetActive(true);
+        restartPanel.SetActive(true);
 
     }
     private async void AnimationStopper()
@@ -92,7 +93,9 @@ public class CubeCollect : MonoBehaviour
         await Task.Delay(500);
         Particle.SetActive(false);
     }
-    //TODO
-    //TRAÝL KAPANMASI LEVEL SONU ÇARPMA YAP
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 
 }

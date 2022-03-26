@@ -9,6 +9,7 @@ TagManager:
   - NonCollected
   - Obstacle
   - Gem
+  - Obstacle2
   layers:
   - Default
   - TransparentFX
