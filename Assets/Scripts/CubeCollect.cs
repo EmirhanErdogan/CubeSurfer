@@ -10,6 +10,7 @@ public class CubeCollect : MonoBehaviour
     public List<GameObject> cubes;
     private Vector3 cubeNewPos;
     [SerializeField]private Text gemText;
+    [SerializeField] private GameObject winPanel;
     private void Awake()
     {
         if (Instance == null)
@@ -73,6 +74,12 @@ public class CubeCollect : MonoBehaviour
             cubes[i].transform.rotation = Quaternion.Euler(0, 0, 0);
             yPos += 3;
         }
+
+    }
+    public IEnumerator WinPanel() 
+    {
+        yield return new WaitForSeconds(1.5f);
+        winPanel.SetActive(true);
 
     }
     private async void AnimationStopper()

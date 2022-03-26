@@ -17,7 +17,7 @@ public class _Collision : MonoBehaviour
         }
         if (this.gameObject.tag.Equals("Player"))
         {
-            if (other.gameObject.tag.Equals("Obstacle"))
+            if (other.gameObject.tag.Equals("Obstacle")|| other.gameObject.tag.Equals("Obstacle2"))
             {
                 Debug.Log("LOSE");
                 CubeCollect.Instance.cubes[0].gameObject.transform.parent.GetComponent<PlayerMovement>().enabled = false;
@@ -28,6 +28,10 @@ public class _Collision : MonoBehaviour
         {
             CubeCollect.Instance.ReleaseCube(this.gameObject);
             StartCoroutine(CubeCollect.Instance._sortCubes());
+        }
+        if (other.gameObject.tag.Equals("Obstacle2"))
+        {
+            CubeCollect.Instance.ReleaseCube(this.gameObject);
         }
         if (other.gameObject.tag.Equals("Gem"))
         {
