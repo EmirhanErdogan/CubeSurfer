@@ -19,7 +19,6 @@ public class _Collision : MonoBehaviour
         {
             if (other.gameObject.tag.Equals("Obstacle")|| other.gameObject.tag.Equals("Obstacle2"))
             {
-                Debug.Log("Restart");
                 StartCoroutine(CubeCollect.Instance.RestartPanel());
                 CubeCollect.Instance.cubes[0].gameObject.transform.parent.GetComponent<PlayerMovement>().enabled = false;
             }
