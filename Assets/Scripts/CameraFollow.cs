@@ -12,8 +12,6 @@ public class CameraFollow : MonoBehaviour
     }
     private void LateUpdate()
     {
-        transform.position = Player.transform.position + Distance;
-        Debug.Log(PlayerPrefs.GetInt("Gem"));
-        
+        transform.position = new Vector3(transform.position.x, transform.position.y, (Player.transform.position.z + Distance.z));
     }
 }

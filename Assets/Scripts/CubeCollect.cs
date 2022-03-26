@@ -48,12 +48,18 @@ public class CubeCollect : MonoBehaviour
     {
         if (releaseCube.tag.Equals("Player")) return;
 
-        releaseCube.transform.parent = null;
-        CubeCollect.Instance.cubes.Remove(releaseCube);
         for (int i = 0; i < cubes.Count; i++)
         {
             cubes[i].GetComponent<Rigidbody>().isKinematic = false;
         }
+        releaseCube.transform.parent = null;
+        CubeCollect.Instance.cubes.Remove(releaseCube);
+    }
+    public void CollectGem(Collider obj)
+    {
+        obj.gameObject.SetActive(false);
+        PlayerPrefs.SetInt("Gem", PlayerPrefs.GetInt("Gem") + 1);
+        gemText.text = string.Format("X {0}", PlayerPrefs.GetInt("Gem"));
     }
     public IEnumerator _sortCubes()
     {
@@ -62,19 +68,12 @@ public class CubeCollect : MonoBehaviour
         int yPos = 0;
         for (int i = cubes.Count-1; i >= 0; i--)
         {
-            Debug.Log("asdasd");
             cubes[i].transform.localPosition = new Vector3(SortPos.x,yPos , SortPos.z);
             cubes[i].GetComponent<Rigidbody>().isKinematic = true;
             cubes[i].transform.rotation = Quaternion.Euler(0, 0, 0);
             yPos += 3;
         }
 
-    }
-    public void CollectGem(Collider obj)
-    {
-        obj.gameObject.SetActive(false);
-        PlayerPrefs.SetInt("Gem", PlayerPrefs.GetInt("Gem") + 1);
-        gemText.text = string.Format("X {0}",PlayerPrefs.GetInt("Gem"));
     }
     private async void AnimationStopper()
     {
