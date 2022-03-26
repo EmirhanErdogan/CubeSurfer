@@ -24,8 +24,9 @@ public class CubeCollect : MonoBehaviour
 
         Cube.gameObject.tag = "Collected";
         transform.GetChild(0).transform.GetChild(0).GetComponent<Animator>().SetBool("ÝsJump", true);
-        //transform.GetChild(0).transform.GetChild(1).gameObject.SetActive(true);
+        Cube.transform.GetChild(0).gameObject.SetActive(true);
         AnimationStopper();
+        ParticleStopper(Cube.transform.GetChild(0).gameObject);
         for (int i = 0; i < cubes.Count; i++)
         {
             cubeNewPos = cubes[i].transform.localPosition;
@@ -47,7 +48,6 @@ public class CubeCollect : MonoBehaviour
     {
         if (releaseCube.tag.Equals("Player")) return;
 
-        //transform.GetChild(0).transform.GetChild(0).GetComponent<Animator>().SetBool("ÝsJump", false);
         releaseCube.transform.parent = null;
         CubeCollect.Instance.cubes.Remove(releaseCube);
         for (int i = 0; i < cubes.Count; i++)
@@ -80,16 +80,13 @@ public class CubeCollect : MonoBehaviour
     {
         await Task.Delay(25);
         transform.GetChild(0).transform.GetChild(0).GetComponent<Animator>().SetBool("ÝsJump", false);
-        //ParticleStopper();
     }
-    private async void ParticleStopper()
+    private async void ParticleStopper(GameObject Particle)
     {
         await Task.Delay(500);
-        transform.GetChild(0).transform.GetChild(1).gameObject.SetActive(false);
+        Particle.SetActive(false);
     }
     //TODO
     //TRAÝL KAPANMASI LEVEL SONU ÇARPMA YAP
-    //DÜÞTÜKTEN SONRA PLAYER ANÝMASYONU
-    //ZIPLADIÐINDA PARTÝCLE AÇ KAPAT
 
 }
